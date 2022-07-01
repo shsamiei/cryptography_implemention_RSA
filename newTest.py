@@ -1,6 +1,5 @@
 import random
 
-
 def primes_inRange(x, y):
     prime_list = []
     for n in range(x, y):
@@ -45,7 +44,6 @@ def generate_keypair():
     p = random.choice(prime_list)
     prime_list = primes_inRange(250, 350)
     q = random.choice(prime_list)
-    print(p, q)
 
     if not (is_prime(p) and is_prime(q)):
         raise ValueError('Both numbers must be prime.')
@@ -63,14 +61,11 @@ def generate_keypair():
         g = gcd(e, phi)
 
     d = multiplicative_inverse(e, phi)
-    print(d)
     return (e, n), (d, n)
 
 
 def encrypt(pk, plaintext):
     key, n = pk
-    print(key)
-    print(n)
     cipher = [pow(ord(char), key) % n for char in plaintext]
     return cipher
 
@@ -81,13 +76,4 @@ def decrypt(pk, ciphertext):
     return ''.join(plain)
 
 
-public, private = generate_keypair()
 
-print("your public key is : ", public)
-print("your private key is : ", private)
-
-message = input('Enter your plain text : ')
-encrypted_msg = encrypt(private, message)
-print(''.join(map(lambda x: str(x), encrypted_msg)))
-
-print(decrypt(public, encrypted_msg))
